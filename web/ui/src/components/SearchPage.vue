@@ -2,19 +2,20 @@
   <h1>MamuroEmail</h1>
   <input class="w-32" type="text" @input="search" v-model="searchTerm" placeholder="type to search by to, from, subject, content" />
   <h1 v-if="error">{{ error }}</h1>
-  <div>
+  <div class="flex flex-row">
     <table>
-      <th>
-        <td>Subject</td>
-        <td>From</td>
-        <td>To</td>
-      </th>
-      <tr v-for="mail in mails" :key="mail">
+      <tr>
+        <th>Subject</th>
+        <th>From</th>
+        <th>To</th>
+      </tr>
+      <tr v-for="mail in mails" :key="mail" @click="selectMail(mail.Body)">
         <td>{{ mail.Subject }}</td>
         <td>{{ mail.From }}</td>
         <td>{{ mail.To }}</td>
       </tr>
     </table>
+    {{ body }}
   </div>
 </template>
 
@@ -26,10 +27,14 @@ export default {
       searchTerm: '',
       mails: [],
       error: '',
-      timeoutHandler: null
+      timeoutHandler: null,
+      body: ''
     }
   },
   methods: {
+    selectMail(body) {
+      this.body = body;
+    },
     search() {
       if (this.searchTerm.trim() == '') return;
       if (this.timeoutHandler) clearTimeout(this.timeoutHandler);
