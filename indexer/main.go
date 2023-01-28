@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/mail"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -101,8 +102,9 @@ func push_index(client *http.Client, data map[string]string) bool {
 	return resp.StatusCode == 200
 }
 
-func main() {
-	filePaths := list_all_files("/Users/carlos/Downloads/enron_mail_20110402/maildir")
+func index_mails(path string, limit int) {
+	// "/Users/carlos/Downloads/enron_mail_20110402/maildir"
+	filePaths := list_all_files(path)
 
 	tr := &http.Transport{
 		//MaxIdleConns:        10,
@@ -133,5 +135,34 @@ func main() {
 		if !result {
 			log.Println("Error pushing!")
 		}
+
+		if limit == -1 {
+			continue
+		} else {
+			limit--
+			if limit == 0 {
+				break
+			}
+		}
 	}
+}
+
+func main() {
+	args := os.Args[1:]
+	if len(args) == 0 {
+		log.Println("Missing parameter: mails path")
+		log.Println("Optional parameter: limit mails as number")
+		return
+	}
+
+	limit := -1
+	if len(args) == 2 {
+		var err error
+		limit, err = strconv.Atoi(args[1])
+		if err != nil {
+			log.Println("Error parsing limit parameter", err)
+		}
+	}
+
+	index_mails(args[0], limit)
 }
