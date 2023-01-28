@@ -5,8 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "generate:css": "tailwindcss --postcss -i ./src/styles/main.css -o ./src/styles/tailwind.css"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "autoprefixer": "^10.4.13",
