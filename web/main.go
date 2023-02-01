@@ -39,6 +39,7 @@ func make_search_request(term string) Response {
 	const user = "admin"
 	const pass = "Complexpass#123"
 	const authString = user + ":" + pass
+	// TODO possible cast optimization, if allowed in Go
 	authBytes := make([]byte, len(authString))
 	copy(authBytes, authString)
 	encodedCredentials := b64.StdEncoding.EncodeToString(authBytes)

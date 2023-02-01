@@ -5,12 +5,10 @@ import (
 )
 
 func BenchmarkListFiles(b *testing.B) {
-	b.ReportAllocs()
 	list_all_files("/Users/carlos/Downloads/enron_mail_20110402/maildir")
 }
 
 func BenchmarkProgramWith1000LimitMap(b *testing.B) {
-	b.ReportAllocs()
 	index_mails("/Users/carlos/Downloads/enron_mail_20110402/maildir", 1000)
 }
 
